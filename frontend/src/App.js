@@ -3,6 +3,7 @@ import './App.css';
 
 function App() {
   const [backendStatus, setBackendStatus] = useState('Loading...');
+  const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
     fetch('/api/health')
@@ -11,13 +12,39 @@ function App() {
       .catch(error => setBackendStatus('Error connecting to backend'));
   }, []);
 
+  // Add random sparkles
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newSparkle = {
+        id: Date.now(),
+        left: Math.random() * 100 + '%',
+        top: Math.random() * 100 + '%'
+      };
+      setSparkles(prev => [...prev.slice(-20), newSparkle]);
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Welcome to My App!</h1>
-        <p>This application is running on DigitalOcean App Platform</p>
-        <p>Backend Status: {backendStatus}</p>
+        <div className="unicorn">🦄</div>
+        <h1 className="blinking-text">✨ Welcome to My Magical App! ✨</h1>
+        <p style={{color: '#ff69b4'}}>This application is running on DigitalOcean App Platform</p>
+        <p style={{color: '#ff1493'}}>Backend Status: {backendStatus}</p>
+        <div className="unicorn">🦄</div>
       </header>
+      {sparkles.map(sparkle => (
+        <div
+          key={sparkle.id}
+          className="sparkle"
+          style={{
+            left: sparkle.left,
+            top: sparkle.top
+          }}
+        />
+      ))}
     </div>
   );
 }
