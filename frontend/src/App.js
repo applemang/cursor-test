@@ -6,7 +6,9 @@ function App() {
   const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
-    fetch('/api/health')
+    // Use environment variable if provided, otherwise use default path
+    const apiUrl = process.env.REACT_APP_API_URL || '/api';
+    fetch(`${apiUrl}/health`)
       .then(response => response.json())
       .then(data => setBackendStatus(data.status))
       .catch(error => setBackendStatus('Error connecting to backend'));
@@ -30,8 +32,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="unicorn">🦄</div>
-        <h1 className="blinking-text">✨ Welcome to My Magical App! ✨</h1>
-        <p style={{color: '#ff69b4'}}>This application is running on DigitalOcean App Platform</p>
+        <h1 className="blinking-text">✨ Welcome to RapidWeb! ✨</h1>
+        <p style={{color: '#ff69b4'}}>Built with FastAPI + React on DigitalOcean App Platform</p>
         <p style={{color: '#ff1493'}}>Backend Status: {backendStatus}</p>
         <div className="unicorn">🦄</div>
       </header>
