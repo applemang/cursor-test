@@ -12,8 +12,8 @@ COPY . .
 # Make sure the app directory exists and Python can find it
 ENV PYTHONPATH=/app
 
-# Expose the port
-EXPOSE 8000
+# Expose the correct port for DigitalOcean
+EXPOSE 8080
 
 # Command to run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"] 
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"] 
